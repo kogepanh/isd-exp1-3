@@ -25,6 +25,7 @@ void update(hword memory2[]);
 void repaint(hword memory2[]);
 void message();
 
+//プログラム
 int main(void){
     hword *ptr;
     hword key;
