@@ -1,0 +1,13 @@
+version: "3"
+
+services: 
+  arm:
+    # Dockerfile の場所
+    build: .
+
+    # ホストOSのボリュームをコンテナOSとマウント
+    volumes: 
+      - ./src:/work/src
+
+    # docker-compose up したときにコンテナが終了しないよう永続化
+    tty: true
