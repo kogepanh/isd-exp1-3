@@ -17,6 +17,30 @@ int main(void) {
 void play_othello() {
   // 初期盤面を描画
   init_board();
+
+  // 操作
+  while (1) {
+    if ((*key & KEY_RIGHT) == KEY_NULL) {
+      move_player(1, 0);
+      while ((*key & KEY_RIGHT) != KEY_RIGHT)
+        ;
+    } else if ((*key & KEY_LEFT) == KEY_NULL) {
+      move_player(-1, 0);
+      while ((*key & KEY_LEFT) != KEY_LEFT)
+        ;
+    } else if ((*key & KEY_UP) == KEY_NULL) {
+      move_player(0, -1);
+      while ((*key & KEY_UP) != KEY_UP)
+        ;
+    } else if ((*key & KEY_DOWN) == KEY_NULL) {
+      move_player(0, 1);
+      while ((*key & KEY_DOWN) != KEY_DOWN)
+        ;
+    } else if ((*key & KEY_A) == KEY_NULL) {
+      while ((*key & KEY_A) != KEY_A)
+        ;
+    }
+  }
 }
 
 // 割り算（分母が変数の場合でも使用可）
@@ -42,13 +66,13 @@ void put_piece(hword x, hword y, short turn) {
 }
 
 // プレイヤーの場所を移動
-void move_player(player player, short x, short y, hword color) {
-  if (0 <= player.x + x && player.x + x <= 7 && 0 <= player.y + y &&
-      player.y + y <= 7) {
-    draw_player(player.x, player.y, BLACK);
-    player.x += x;
-    player.y += y;
-    draw_player(player.x, player.y, color);
+void move_player(short x, short y) {
+  if (0 <= player_A.x + x && player_A.x + x <= 7 && 0 <= player_A.y + y &&
+      player_A.y + y <= 7) {
+    draw_player(player_A.x, player_A.y, BLACK);
+    player_A.x += x;
+    player_A.y += y;
+    draw_player(player_A.x, player_A.y, RED);
   }
 }
 

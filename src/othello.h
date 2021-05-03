@@ -44,7 +44,7 @@ typedef struct {
 void play_othello();
 hword div(hword, hword);
 void put_piece(hword, hword, short);
-void move_player(player, short, short, hword);
+void move_player(short, short);
 // hword can_put_piece(hword, hword, hword[BOX_COUNT][BOX_COUNT], hword);
 // hword can_put_any_piece(hword[BOX_COUNT][BOX_COUNT], hword);
 // void is_gameset(hword[BOX_COUNT][BOX_COUNT]);
