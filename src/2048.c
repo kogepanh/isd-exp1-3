@@ -1,7 +1,10 @@
 /**
- * 2048
+ * 2048 ゲーム
  *
  * <操作方法>
+ *  ゲーム開始：           Aボタン
+ *  上下左右のスワイプ：    上下左右の矢印キー
+ *  ゲームをやり直したい時： SELECTボタン
  */
 
 // 関数
@@ -14,7 +17,9 @@ int main(void) {
   *ptr = 0x0F03;
 
   // 2048をプレイ
-  play_2048();
+  while (1) {
+    play_2048();
+  }
 
   while (1)
     ;
@@ -68,6 +73,8 @@ void play_2048() {
       swipe(3);
       while ((*key & KEY_RIGHT) != KEY_RIGHT)
         ;
+    } else if ((*key & KEY_SELECT) == KEY_NULL) {
+      break;
     }
 
     rand_i++;
@@ -335,6 +342,44 @@ void merge_number(hword direction, hword n) {
       }
       break;
     }
+    // case 2: {
+    //   for (i = 3; i >= 1; i--) {
+    //     if (board[i][n] != 0) {
+    //       for (j = i - 1; j >= 0; j--) {
+    //         if (board[i][n] != board[j][n] && board[j][n] != 0) {
+    //           break;
+    //         }
+    //         if (board[i][n] == board[j][n]) {
+    //           board[i][n] *= 2;
+    //           board_flag[i][n] = 1;
+    //           board[j][n] = 0;
+    //           board_flag[j][n] = 1;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   break;
+    // }
+    // case 3: {
+    //   for (i = 3; i >= 1; i--) {
+    //     if (board[n][i] != 0) {
+    //       for (j = i - 1; j >= 0; j--) {
+    //         if (board[n][i] != board[n][j] && board[n][j] != 0) {
+    //           break;
+    //         }
+    //         if (board[n][i] == board[n][j]) {
+    //           board[n][i] *= 2;
+    //           board_flag[n][i] = 1;
+    //           board[n][j] = 0;
+    //           board_flag[n][j] = 1;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   break;
+    // }
     default:
       break;
   }
@@ -375,6 +420,38 @@ void move_number(hword direction, hword n) {
       }
       break;
     }
+    // case 2: {
+    //   for (i = 3; i >= 1; i--) {
+    //     if (board[i][n] == 0) {
+    //       for (j = i - 1; j >= 0; j--) {
+    //         if (board[j][n] != 0) {
+    //           board[i][n] = board[j][n];
+    //           board_flag[i][n] = 1;
+    //           board[j][n] = 0;
+    //           board_flag[j][n] = 1;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   break;
+    // }
+    // case 3: {
+    //   for (i = 3; i >= 1; i--) {
+    //     if (board[n][i] == 0) {
+    //       for (j = i - 1; j >= 0; j--) {
+    //         if (board[n][j] != 0) {
+    //           board[n][i] = board[n][j];
+    //           board_flag[n][i] = 1;
+    //           board[n][j] = 0;
+    //           board_flag[n][j] = 1;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   break;
+    // }
     default: {
       break;
     }
@@ -397,6 +474,7 @@ void clean_board_red() {
       if (board_red_flag[i][j] == 1) {
         draw_number(j, i, board[i][j], BLACK);
         board_red_flag[i][j] = 0;
+        return;
       }
     }
   }
