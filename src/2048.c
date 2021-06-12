@@ -58,19 +58,19 @@ void play_2048() {
   // キーの入力判定
   while (1) {
     if ((*key & KEY_UP) == KEY_NULL) {
-      swipe(0);
+      swipe(DIRECTION_UP);
       while ((*key & KEY_UP) != KEY_UP)
         ;
     } else if ((*key & KEY_LEFT) == KEY_NULL) {
-      swipe(1);
+      swipe(DIRECTION_LEFT);
       while ((*key & KEY_LEFT) != KEY_LEFT)
         ;
     } else if ((*key & KEY_DOWN) == KEY_NULL) {
-      swipe(2);
+      swipe(DIRECTION_DOWN);
       while ((*key & KEY_DOWN) != KEY_DOWN)
         ;
     } else if ((*key & KEY_RIGHT) == KEY_NULL) {
-      swipe(3);
+      swipe(DIRECTION_RIGHT);
       while ((*key & KEY_RIGHT) != KEY_RIGHT)
         ;
     } else if ((*key & KEY_SELECT) == KEY_NULL) {
@@ -304,7 +304,7 @@ void swipe(hword direction) {
 void merge_number(hword direction, hword n) {
   hword i, j;
   switch (direction) {
-    case 0: {
+    case DIRECTION_UP: {
       for (i = 0; i < 3; i++) {
         if (board[i][n] != 0) {
           for (j = i + 1; j < 4; j++) {
@@ -323,7 +323,7 @@ void merge_number(hword direction, hword n) {
       }
       break;
     }
-    case 1: {
+    case DIRECTION_LEFT: {
       for (i = 0; i < 3; i++) {
         if (board[n][i] != 0) {
           for (j = i + 1; j < 4; j++) {
@@ -342,44 +342,50 @@ void merge_number(hword direction, hword n) {
       }
       break;
     }
-    // case 2: {
-    //   for (i = 3; i >= 1; i--) {
-    //     if (board[i][n] != 0) {
-    //       for (j = i - 1; j >= 0; j--) {
-    //         if (board[i][n] != board[j][n] && board[j][n] != 0) {
-    //           break;
-    //         }
-    //         if (board[i][n] == board[j][n]) {
-    //           board[i][n] *= 2;
-    //           board_flag[i][n] = 1;
-    //           board[j][n] = 0;
-    //           board_flag[j][n] = 1;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   break;
-    // }
-    // case 3: {
-    //   for (i = 3; i >= 1; i--) {
-    //     if (board[n][i] != 0) {
-    //       for (j = i - 1; j >= 0; j--) {
-    //         if (board[n][i] != board[n][j] && board[n][j] != 0) {
-    //           break;
-    //         }
-    //         if (board[n][i] == board[n][j]) {
-    //           board[n][i] *= 2;
-    //           board_flag[n][i] = 1;
-    //           board[n][j] = 0;
-    //           board_flag[n][j] = 1;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   break;
-    // }
+    case DIRECTION_DOWN: {
+      for (i = 3; i >= 1; i--) {
+        if (board[i][n] != 0) {
+          for (j = i - 1; j >= 0; j--) {
+            if (board[i][n] != board[j][n] && board[j][n] != 0) {
+              break;
+            }
+            if (board[i][n] == board[j][n]) {
+              board[i][n] *= 2;
+              board_flag[i][n] = 1;
+              board[j][n] = 0;
+              board_flag[j][n] = 1;
+              break;
+            }
+            if(j == 0){ // オーバーフローに対処
+              break;
+            }
+          }
+        }
+      }
+      break;
+    }
+    case DIRECTION_RIGHT: {
+      for (i = 3; i >= 1; i--) {
+        if (board[n][i] != 0) {
+          for (j = i - 1; j >= 0; j--) {
+            if (board[n][i] != board[n][j] && board[n][j] != 0) {
+              break;
+            }
+            if (board[n][i] == board[n][j]) {
+              board[n][i] *= 2;
+              board_flag[n][i] = 1;
+              board[n][j] = 0;
+              board_flag[n][j] = 1;
+              break;
+            }
+            if(j == 0){ // オーバーフローに対処
+              break;
+            }
+          }
+        }
+      }
+      break;
+    }
     default:
       break;
   }
@@ -388,7 +394,7 @@ void merge_number(hword direction, hword n) {
 void move_number(hword direction, hword n) {
   hword i, j;
   switch (direction) {
-    case 0: {
+    case DIRECTION_UP: {
       for (i = 0; i < 3; i++) {
         if (board[i][n] == 0) {
           for (j = i + 1; j < 4; j++) {
@@ -404,7 +410,7 @@ void move_number(hword direction, hword n) {
       }
       break;
     }
-    case 1: {
+    case DIRECTION_LEFT: {
       for (i = 0; i < 3; i++) {
         if (board[n][i] == 0) {
           for (j = i + 1; j < 4; j++) {
@@ -420,38 +426,44 @@ void move_number(hword direction, hword n) {
       }
       break;
     }
-    // case 2: {
-    //   for (i = 3; i >= 1; i--) {
-    //     if (board[i][n] == 0) {
-    //       for (j = i - 1; j >= 0; j--) {
-    //         if (board[j][n] != 0) {
-    //           board[i][n] = board[j][n];
-    //           board_flag[i][n] = 1;
-    //           board[j][n] = 0;
-    //           board_flag[j][n] = 1;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   break;
-    // }
-    // case 3: {
-    //   for (i = 3; i >= 1; i--) {
-    //     if (board[n][i] == 0) {
-    //       for (j = i - 1; j >= 0; j--) {
-    //         if (board[n][j] != 0) {
-    //           board[n][i] = board[n][j];
-    //           board_flag[n][i] = 1;
-    //           board[n][j] = 0;
-    //           board_flag[n][j] = 1;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    //   break;
-    // }
+    case DIRECTION_DOWN: {
+      for (i = 3; i >= 1; i--) {
+        if (board[i][n] == 0) {
+          for (j = i - 1; j >= 0; j--) {
+            if (board[j][n] != 0) {
+              board[i][n] = board[j][n];
+              board_flag[i][n] = 1;
+              board[j][n] = 0;
+              board_flag[j][n] = 1;
+              break;
+            }
+            if(j == 0){ // オーバーフローに対処
+              break;
+            }
+          }
+        }
+      }
+      break;
+    }
+    case DIRECTION_RIGHT: {
+      for (i = 3; i >= 1; i--) {
+        if (board[n][i] == 0) {
+          for (j = i - 1; j >= 0; j--) {
+            if (board[n][j] != 0) {
+              board[n][i] = board[n][j];
+              board_flag[n][i] = 1;
+              board[n][j] = 0;
+              board_flag[n][j] = 1;
+              break;
+            }
+            if(j == 0){ // オーバーフローに対処
+              break;
+            }
+          }
+        }
+      }
+      break;
+    }
     default: {
       break;
     }

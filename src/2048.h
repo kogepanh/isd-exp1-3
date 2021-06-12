@@ -26,6 +26,11 @@ typedef volatile unsigned short hword;
 #define KEY_R 0x0100
 #define KEY_L 0x0200
 
+#define DIRECTION_UP 0
+#define DIRECTION_LEFT 1
+#define DIRECTION_DOWN 2
+#define DIRECTION_RIGHT 3
+
 #define WINDOW_X 240
 #define WINDOW_Y 160
 
