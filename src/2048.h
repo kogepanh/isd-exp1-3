@@ -53,6 +53,7 @@ void draw_square(hword, hword, hword, hword, hword);
 void draw_box_bg(hword, hword, hword);
 void draw_box_line(hword, hword, hword);
 void draw_board();
+void draw_over_board(hword);
 void init_board();
 void draw_number(hword, hword, hword, hword);
 void draw_all_number();
@@ -62,6 +63,7 @@ void move_number(hword, hword);
 void clean_board_flag();
 void clean_board_red();
 void generate_number();
+void check_gameover();
 
 void draw_number_0(hword, hword, hword);
 void draw_number_1(hword, hword, hword);

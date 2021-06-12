@@ -7,7 +7,7 @@
  *  ゲームをやり直したい時： SELECTボタン
  */
 
-// 関数
+// ヘッダファイル
 #include "2048.h"
 
 // メイン関数
@@ -77,6 +77,7 @@ void play_2048() {
       break;
     }
 
+    // 乱数の生成
     rand_i++;
     if (rand_i == 159) {
       rand_i = 0;
@@ -176,6 +177,19 @@ void draw_board() {
   }
 }
 
+// 枠外の描画
+void draw_over_board(hword color) {
+  hword x, y;
+  for (y = 0; y < 160; y++) {
+    for (x = 0; x < 240; x++) {
+      if (x < (120 - (BOX_SIZE * 2)) | (120 + (BOX_SIZE * 2)) < x |
+          y < (80 - (BOX_SIZE * 2)) | (80 + (BOX_SIZE * 2)) < y) {
+        draw_point(x, y, color);
+      }
+    }
+  }
+}
+
 // 初期数字の配置
 void init_board() {
   hword x, y;
@@ -187,6 +201,7 @@ void init_board() {
     }
   }
 
+  // Aボタンの入力待ち
   hword i = 0;
   while (1) {
     if ((*key & KEY_A) == KEY_NULL) {
@@ -215,6 +230,7 @@ void init_board() {
   }
 }
 
+// 指定したマスに数字を描画
 void draw_number(hword j, hword i, hword number, hword color) {
   switch (number) {
     case 2: {
@@ -271,6 +287,7 @@ void draw_number(hword j, hword i, hword number, hword color) {
   }
 }
 
+// 数字が変更されたマスを描画
 void draw_all_number() {
   hword i, j;
   hword turn_flag = 0;
@@ -292,6 +309,7 @@ void draw_all_number() {
   clean_board_flag();
 }
 
+// 4方向のスワイプ操作
 void swipe(hword direction) {
   hword i;
   for (i = 0; i < 4; i++) {
@@ -301,6 +319,7 @@ void swipe(hword direction) {
   draw_all_number();
 }
 
+// 列・行ごとに数字のマージ
 void merge_number(hword direction, hword n) {
   hword i, j;
   switch (direction) {
@@ -356,7 +375,7 @@ void merge_number(hword direction, hword n) {
               board_flag[j][n] = 1;
               break;
             }
-            if(j == 0){ // オーバーフローに対処
+            if (j == 0) {  // オーバーフローに対処
               break;
             }
           }
@@ -378,7 +397,7 @@ void merge_number(hword direction, hword n) {
               board_flag[n][j] = 1;
               break;
             }
-            if(j == 0){ // オーバーフローに対処
+            if (j == 0) {  // オーバーフローに対処
               break;
             }
           }
@@ -391,6 +410,7 @@ void merge_number(hword direction, hword n) {
   }
 }
 
+// 列・行ごとに数字の移動
 void move_number(hword direction, hword n) {
   hword i, j;
   switch (direction) {
@@ -437,7 +457,7 @@ void move_number(hword direction, hword n) {
               board_flag[j][n] = 1;
               break;
             }
-            if(j == 0){ // オーバーフローに対処
+            if (j == 0) {  // オーバーフローに対処
               break;
             }
           }
@@ -456,7 +476,7 @@ void move_number(hword direction, hword n) {
               board_flag[n][j] = 1;
               break;
             }
-            if(j == 0){ // オーバーフローに対処
+            if (j == 0) {  // オーバーフローに対処
               break;
             }
           }
@@ -470,6 +490,7 @@ void move_number(hword direction, hword n) {
   }
 }
 
+// 数字の描画変更のためのフラグをリセット
 void clean_board_flag() {
   hword i, j;
   for (i = 0; i < 4; i++) {
@@ -479,6 +500,7 @@ void clean_board_flag() {
   }
 }
 
+// 自動生成された数字のフラグをリセット
 void clean_board_red() {
   hword i, j;
   for (i = 0; i < 4; i++) {
@@ -492,6 +514,7 @@ void clean_board_red() {
   }
 }
 
+// 数字を自動生成
 void generate_number() {
   hword b = mod(rand_i, 16);
   hword a;
@@ -506,6 +529,43 @@ void generate_number() {
         draw_box_2(div(c, 4), mod(c, 4), RED);
       }
       board_red_flag[mod(c, 4)][div(c, 4)] = 1;
+      break;
+    }
+  }
+
+  check_gameover();
+}
+
+// 動かせるマスがあるか判定
+void check_gameover() {
+  hword x, y;
+  for (y = 0; y < 4; y++) {
+    for (x = 0; x < 4; x++) {
+      if (board[y][x] != 0) {
+        if (y < 3) {
+          if (board[y][x] == board[y + 1][x]) {
+            return;
+          }
+        }
+        if (x < 3) {
+          if (board[y][x] == board[y][x + 1]) {
+            return;
+          }
+        }
+      } else {
+        return;
+      }
+    }
+  }
+
+  draw_over_board(RED);
+
+  // SELECTキーの入力判定
+  while (1) {
+    if ((*key & KEY_SELECT) == KEY_NULL) {
+      while (1) {
+        play_2048();
+      }
       break;
     }
   }
