@@ -65,6 +65,8 @@ void draw_side_circle();
 void draw_side_arrow(hword);
 void draw_arrow(hword, hword, hword);
 void draw_box_bg(hword, hword);
+void draw_box_line(hword, hword, hword);
+void draw_box_circle(hword, hword, hword);
 void draw_player(hword, hword, hword);
 void draw_piece(hword, hword, hword);
 void draw_circle(hword, hword, hword, hword);
