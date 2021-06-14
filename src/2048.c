@@ -2,7 +2,7 @@
  * 2048 ゲーム
  *
  * <操作方法>
- *  ゲーム開始：           Aボタン
+ *  ゲーム開始：           STARTボタン
  *  上下左右のスワイプ：    上下左右の矢印キー
  *  ゲームをやり直したい時： SELECTボタン
  */
@@ -204,7 +204,7 @@ void init_board() {
   // Aボタンの入力待ち
   hword i = 0;
   while (1) {
-    if ((*key & KEY_A) == KEY_NULL) {
+    if ((*key & KEY_START) == KEY_NULL) {
       hword a = div(i, 16);
       hword b = mod(i, 16);
       if (a == b) {
