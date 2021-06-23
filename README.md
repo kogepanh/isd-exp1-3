@@ -69,7 +69,7 @@ arm-none-eabi-objdump -b binary -m arm -D [NAME].mb > [NAME].txt
 exit
 
 # コンテナを停止
-docker-compose down -rmi all
+docker-compose down --rmi all
 ```
 
 ## VBA(visualboyadvance)について

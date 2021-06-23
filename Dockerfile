@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 # コンテナ内の作業用（ワーキング）ディレクトリ（絶対パスの必要）
-WORKDIR /work
+WORKDIR /work/src
 
 RUN   apt-get update && \
       apt-get upgrade -y && \

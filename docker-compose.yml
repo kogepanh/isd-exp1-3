@@ -2,6 +2,7 @@ version: "3"
 
 services: 
   arm:
+    container_name: arm
     # Dockerfile の場所
     build: .
 
