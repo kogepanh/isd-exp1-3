@@ -2,27 +2,31 @@
 
 ## 環境構築
 
-事前に `docker -v` と `docker-compose -v` を確認してください。
+事前に下記のソフトウェアをインストールしてください。
 
-ここからは `docker-compose.yml` が存在するディレクトリで実行してください。
+- Docker
+- Visual Studio Code
+- [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)（VS Code 拡張機能）
+
+### 1. Remote Containers で開く
+
+左下の `><` マークを押すことで Remote Containers で開くことができます。
+
+![preview1](https://user-images.githubusercontent.com/49851726/123954396-4eeeab80-d9e3-11eb-942c-eb80e3ac35eb.gif)
+
+### 2. ソースファイルのコンパイル
 
 ```sh
-# docker-compose.ymlで定義したserviceのビルドを実行
-docker-compose build
+# コンパイル (*.c → *.mb) or (*.s → *.mb)
+# 拡張子はつけないでください
+make NAME=[FILE_NAME]
 
-# キャッシュのせいで設定変更が反映されない時はオプションをつけるべし
-# docker-compose build --no-cache
+# カスファイルを削除
+# *.s は削除されないので注意 (extra ファイルでは *.s ファイルも削除されます)
+make clean
 ```
 
-## コンテナ起動
-
-```sh
-# コンテナを起動
-docker-compose up
-
-# コンテナの中に入る
-docker exec -it arm bash
-```
+![preview2](https://user-images.githubusercontent.com/49851726/123954472-662d9900-d9e3-11eb-8e0b-b14251c1dd6d.gif)
 
 ## コンパイル
 
@@ -55,16 +59,6 @@ arm-none-eabi-objcopy -O binary [NAME].out [NAME].mb
 arm-none-eabi-objdump -b binary -m arm -D [NAME].mb > [NAME].txt
 ```
 
-## 終了時
-
-```sh
-# コンテナから抜ける
-exit
-
-# コンテナを停止
-docker-compose down --rmi all
-```
-
 ## VBA(visualboyadvance)について
 
 この環境でコンパイルした`mb`ファイルは，VBAというエミュレータで実行することができます．
@@ -73,18 +67,18 @@ docker-compose down --rmi all
 
 VBAの実行形式はホストOSごとに異なります．
 
-+ MacOS
-  + 本リポジトリ上の`visualboyadvance-m.app`を使用してください．
-+ Windows
-  + 本リポジトリ上の`VisualBoyAdvance-w/VisualBoyAdvance.exe`を使用してください．
-+ Linux(Ubuntu)
-  + 後述する方法でインストールしてください．
+- MacOS
+  - 本リポジトリ上の`visualboyadvance-m.app`を使用してください．
+- Windows
+  - 本リポジトリ上の`VisualBoyAdvance-w/VisualBoyAdvance.exe`を使用してください．
+- Linux(Ubuntu)
+  - 後述する方法でインストールしてください．
 
 ### Ubuntu環境
 
 検証した環境
 
-+ Ubuntu 20.04LTS
+- Ubuntu 20.04 LTS
 
 GBAのエミュレータとして，本来はVBAの発展版である｢VBA-M｣を利用するようですが，VBA-Mではこの環境でコンパイルした`.mb`ファイルを正常に起動できません．
 
@@ -108,30 +102,30 @@ sudo dpkg -i visualboyadvance-gtk_1.8.0.dfsg-4_amd64.deb
 
 ## 実験の課題一覧
 
-JM101のホワイトボードに記載する際に利用してください．
+JM101 のホワイトボードに記載する際に利用してください．
 
-実験1
+実験 1
 
-+ 3.1 ドット表示 (dots2.S)
-+ 3.2.1 ドット色変更 (dots3.S)
-+ 3.2.2 ドット表示位置変更 (dots4.S)
-+ 3.3 C言語化 (dots5.c)
+- 3.1 ドット表示 (dots2.S)
+- 3.2.1 ドット色変更 (dots3.S)
+- 3.2.2 ドット表示位置変更 (dots4.S)
+- 3.3 C言語化 (dots5.c)
 
-実験2
+実験 2
 
-+ 4.1.2 キー入力(アセンブリ)
-+ 4.1.4 キー入力(C言語)
+- 4.1.2 キー入力 (アセンブリ)
+- 4.1.4 キー入力 (C言語)
 
-実験3
+実験 3
 
-+ 5.1 画面の塗りつぶし
-+ 5.2 点の描画(その1)
-+ 5.3 点の描画(その2)
-+ 5.4 点の移動x
+- 5.1 画面の塗りつぶし
+- 5.2 点の描画 (その1)
+- 5.3 点の描画 (その2)
+- 5.4 点の移動x
 
-実験4
+実験 4
 
-+ 5.1 四角形
-+ 5.2 円
-+ 5.3 線分(その1)
-+ 5.4 線分(その2)
+- 5.1 四角形
+- 5.2 円
+- 5.3 線分 (その1)
+- 5.4 線分 (その2)
