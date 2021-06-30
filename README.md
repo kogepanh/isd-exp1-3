@@ -76,7 +76,7 @@ VBAの実行形式はホストOSごとに異なります．
 + MacOS
   + 本リポジトリ上の`visualboyadvance-m.app`を使用してください．
 + Windows
-  + 本リポジトリ上の`VisualBoyAdvance-1.7.2/VisualBoyAdvance.exe`を使用してください．
+  + 本リポジトリ上の`VisualBoyAdvance-w/VisualBoyAdvance.exe`を使用してください．
 + Linux(Ubuntu)
   + 後述する方法でインストールしてください．
 
