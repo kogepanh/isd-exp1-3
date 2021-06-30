@@ -1,0 +1,8 @@
+{
+	"name": "arm-gcc",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "arm",
+	"workspaceFolder": "/work/src",
+	"settings": {},
+	"extensions": []
+}
