@@ -28,17 +28,6 @@ make clean
 
 ![preview2](https://user-images.githubusercontent.com/49851726/123954472-662d9900-d9e3-11eb-8e0b-b14251c1dd6d.gif)
 
-## コンパイル
-
-```sh
-# コンパイル (*.c → *.mb) or (*.s → *.mb)
-make NAME=[FILE_NAME]
-
-# カスファイルを削除
-# *.s は削除されないので注意
-make clean
-```
-
 ## コマンド互換表
 
 ```sh
