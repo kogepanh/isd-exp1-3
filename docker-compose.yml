@@ -2,7 +2,9 @@ version: "3"
 
 services: 
   arm:
+    # コンテナ名を指定して docker exec が楽
     container_name: arm
+    
     # Dockerfile の場所
     build: .
 

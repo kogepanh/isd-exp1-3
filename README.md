@@ -20,20 +20,13 @@ docker-compose build
 # コンテナを起動
 docker-compose up
 
-# コンテナ一覧を表示
-# 入りたいコンテナの [CONTAINER_ID] をコピーする
-docker ps -a
-
 # コンテナの中に入る
-docker exec -it [CONTAINER_ID] bash
+docker exec -it arm bash
 ```
 
 ## コンパイル
 
 ```sh
-# ディレクトリを移動
-cd src
-
 # コンパイル (*.c → *.mb) or (*.s → *.mb)
 make NAME=[FILE_NAME]
 
@@ -78,7 +71,7 @@ docker-compose down --rmi all
 
 ホストOS上でVBAを実行し，生成した`.mb`ファイルを読み込みます．
 
-VBAの実行形式はホストOSごとに異なります
+VBAの実行形式はホストOSごとに異なります．
 
 + MacOS
   + 本リポジトリ上の`visualboyadvance-m.app`を使用してください．
